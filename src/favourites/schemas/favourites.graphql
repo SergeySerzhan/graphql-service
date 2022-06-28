@@ -6,3 +6,7 @@ type Favourite {
     artists: [ID]
     tracks: [ID]
 }
+
+#type Query {
+#    favourites(userId: ID!): Favourite
+#}
