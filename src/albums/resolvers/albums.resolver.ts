@@ -1,60 +1,63 @@
-import { Resolver, Args, Query, ResolveField, Parent } from '@nestjs/graphql';
-
-import { AlbumsService } from '../services/albums.service';
-import { ArtistsService } from '../../artists/services/artists.service';
-import { BandsService } from '../../bands/services/bands.service';
-import { TracksService } from '../../tracks/services/tracks.service';
-import { GenresService } from "../../genres/services/genres.service";
+import {
+  Resolver,
+  Args,
+  Query,
+  ResolveField,
+  Parent,
+  Context,
+} from '@nestjs/graphql';
 
 @Resolver('Album')
 export class AlbumsResolver {
-  constructor(
-    private albumsService: AlbumsService,
-    private artistsService: ArtistsService,
-    private bandsService: BandsService,
-    private tracksService: TracksService,
-    private genresService: GenresService
-  ) {}
-
   @Query()
-  async albums(@Args('limit') limit: number, @Args('offset') offset: number) {
-    return await this.albumsService.getAllAlbums(limit, offset);
+  async albums(
+    @Args('limit') limit: number,
+    @Args('offset') offset: number,
+    @Context('dataSources') {AlbumsAPI},
+  ) {
+    return (await AlbumsAPI.getAllAlbums(limit, offset)).items;
   }
 
   @Query()
-  async album(@Args('id') id: string) {
-    return await this.albumsService.getAlbumById(id);
+  async album(@Args('id') id: string, @Context('dataSources') { AlbumsAPI }) {
+    return await AlbumsAPI.getAlbumById(id);
   }
 
   @ResolveField()
-  async artists(@Parent() album) {
+  async id(@Parent() album) {
+    return album._id;
+  }
+
+  @ResolveField()
+  async artists(@Parent() album, @Context('dataSources') { ArtistsAPI }) {
     const { artistsIds } = album;
     return await Promise.allSettled(
-      artistsIds.map((id) => this.artistsService.getArtistById(id)),
+      artistsIds.map((id) => ArtistsAPI.getArtistById(id)),
     );
   }
 
   @ResolveField()
-  async bands(@Parent() album) {
+  async bands(@Parent() album, @Context('dataSources') { BandsAPI }) {
     const { bandsIds } = album;
     return await Promise.allSettled(
-      bandsIds.map((id) => this.bandsService.getBandById(id)),
+      bandsIds.map((id) => BandsAPI.getBandById(id)),
     );
+
   }
 
   @ResolveField()
-  async tracks(@Parent() album) {
+  async tracks(@Parent() album, @Context('dataSources') { TracksAPI }) {
     const { tracksIds } = album;
     return await Promise.allSettled(
-      tracksIds.map((id) => this.tracksService.getTrackById(id)),
+      tracksIds.map((id) => TracksAPI.getTrackById(id)),
     );
   }
 
   @ResolveField()
-  async genres(@Parent() album) {
+  async genres(@Parent() album, @Context('dataSources') { GenresAPI }) {
     const { genresIds } = album;
     return await Promise.allSettled(
-      genresIds.map(id => this.genresService.getGenreById(id)),
+      genresIds.map((id) => GenresAPI.getGenreById(id)),
     );
   }
 }

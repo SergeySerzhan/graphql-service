@@ -1,5 +1,5 @@
 type Artist {
-    id: ID!
+    id: ID
     firstName: String
     secondName: String
     middleName: String
@@ -12,5 +12,5 @@ type Artist {
 
 #type Query {
 #    artists(limit: Int, offset: Int): [Artist]
-#    artist(id: ID!): Artist
+#    artist(id: ID): Artist
 #}

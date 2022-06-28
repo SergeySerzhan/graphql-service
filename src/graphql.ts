@@ -25,7 +25,7 @@ export abstract class IQuery {
 }
 
 export class Artist {
-    id: string;
+    id?: Nullable<string>;
     firstName?: Nullable<string>;
     secondName?: Nullable<string>;
     middleName?: Nullable<string>;

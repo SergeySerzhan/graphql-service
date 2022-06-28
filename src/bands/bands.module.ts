@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
 
-import { BandsService } from "./services/bands.service";
-
 @Module({
   imports: [],
-  providers: [BandsService],
-  exports: [BandsService]
+  providers: [],
+  exports: []
 })
 export class BandsModule {}
