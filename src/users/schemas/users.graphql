@@ -7,7 +7,7 @@ type User {
     email: String!
 }
 
-#type Query {
-#    user(id: ID!): User
-#    jwt(email: String!, password: String!): String
-#}
+extend type Query {
+    user(id: ID!): User
+    jwt(email: String!, password: String!): String
+}

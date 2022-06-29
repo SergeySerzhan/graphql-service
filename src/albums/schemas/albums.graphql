@@ -1,5 +1,5 @@
 type Album {
-    id: String
+    id: ID
     name: String
     released: Int
     artists: [Artist]
@@ -9,7 +9,7 @@ type Album {
     image: String
 }
 
-type Query {
+extend type Query {
     albums(limit: Int, offset: Int): [Album]
-    album(id: String!): Album
+    album(id: ID!): Album
 }

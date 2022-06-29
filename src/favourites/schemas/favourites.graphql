@@ -7,6 +7,6 @@ type Favourite {
     tracks: [ID]
 }
 
-#type Query {
-#    favourites(userId: ID!): Favourite
-#}
+extend type Query {
+    favourites(userId: ID!): Favourite
+}

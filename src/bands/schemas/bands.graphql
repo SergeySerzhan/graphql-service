@@ -2,12 +2,18 @@ type Band {
     id: ID!
     name: String
     origin: String
-    members: [Artist]
+    members: [Member]
     website: String
     genres: String
 }
 
-#type Query {
-#    bands(limit: Int, offset: Int): [Band]
-#    band(id: ID!): Band
-#}
+type Member {
+    artist: String
+    instrument: String
+    years: [String]
+}
+
+extend type Query {
+    bands(limit: Int, offset: Int): [Band]
+    band(id: ID!): Band
+}
