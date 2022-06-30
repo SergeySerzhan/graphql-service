@@ -15,6 +15,11 @@ type Query {
   artist(id: ID!): Artist
 }
 
+type DeleteInfo {
+    acknowledged: Boolean
+    deletedCount: Int
+}
+
 type Mutation {
   createArtist(
     firstName: String!
@@ -23,8 +28,16 @@ type Mutation {
     middleName: String
     birtDate: String
     birthPlace: String
-
     bandsIds: [String]
     instruments: [String]
   ): Artist
+  deleteArtist(id: ID!): DeleteInfo
+    updateArtist(firstName: String
+        secondName: String
+        country: String
+        middleName: String
+        birtDate: String
+        birthPlace: String
+        bandsIds: [String]
+        instruments: [String]): Artist
 }

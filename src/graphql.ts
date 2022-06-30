@@ -58,8 +58,15 @@ export class Artist {
     instruments?: Nullable<string>;
 }
 
+export class DeleteInfo {
+    acknowledged?: Nullable<boolean>;
+    deletedCount?: Nullable<number>;
+}
+
 export abstract class IMutation {
     abstract createArtist(firstName: string, secondName: string, country: string, middleName?: Nullable<string>, birtDate?: Nullable<string>, birthPlace?: Nullable<string>, bandsIds?: Nullable<Nullable<string>[]>, instruments?: Nullable<Nullable<string>[]>): Nullable<Artist> | Promise<Nullable<Artist>>;
+
+    abstract deleteArtist(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
 }
 
 export class Band {

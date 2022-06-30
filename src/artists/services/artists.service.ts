@@ -47,4 +47,28 @@ export class ArtistsService extends RESTDataSource {
       },
     );
   }
+
+  async deleteArtist(token: string, id: string) {
+    return await this.delete(
+      `${this.baseURL}${id}`,
+      {},
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+  }
+
+  async updateArtist(
+    token: string,
+    firstName: string,
+    secondName: string,
+    country: string,
+    middleName: string | null = null,
+    birthDate: string | null = null,
+    birthPlace: string | null = null,
+    bandsIds: string[],
+    instruments: string[],
+  );
 }

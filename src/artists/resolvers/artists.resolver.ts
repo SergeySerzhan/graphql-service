@@ -50,6 +50,15 @@ export class ArtistsResolver {
     );
   }
 
+  @Mutation()
+  async deleteArtist(
+    @Args('id') id: string,
+    @Context('dataSources') { ArtistsAPI },
+    @Context('token') token: string,
+  ) {
+    return await ArtistsAPI.deleteArtist(token, id);
+  }
+
   @ResolveField()
   async id(@Parent() artist) {
     return artist._id;
