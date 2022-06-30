@@ -25,13 +25,13 @@ export abstract class IQuery {
 
     abstract artists(limit?: Nullable<number>, offset?: Nullable<number>): Nullable<Nullable<Artist>[]> | Promise<Nullable<Nullable<Artist>[]>>;
 
-    abstract artist(id?: Nullable<string>): Nullable<Artist> | Promise<Nullable<Artist>>;
+    abstract artist(id: string): Nullable<Artist> | Promise<Nullable<Artist>>;
 
     abstract bands(limit?: Nullable<number>, offset?: Nullable<number>): Nullable<Nullable<Band>[]> | Promise<Nullable<Nullable<Band>[]>>;
 
     abstract band(id: string): Nullable<Band> | Promise<Nullable<Band>>;
 
-    abstract favourites(userId: string): Nullable<Favourite> | Promise<Nullable<Favourite>>;
+    abstract favourites(userId: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
 
     abstract genres(limit?: Nullable<number>, offset?: Nullable<number>): Nullable<Nullable<Genre>[]> | Promise<Nullable<Nullable<Genre>[]>>;
 
@@ -51,11 +51,15 @@ export class Artist {
     firstName?: Nullable<string>;
     secondName?: Nullable<string>;
     middleName?: Nullable<string>;
-    birtDate?: Nullable<string>;
+    birthDate?: Nullable<string>;
     birthPlace?: Nullable<string>;
     country?: Nullable<string>;
-    bands?: Nullable<Nullable<string>[]>;
+    bands?: Nullable<Nullable<Band>[]>;
     instruments?: Nullable<string>;
+}
+
+export abstract class IMutation {
+    abstract createArtist(firstName: string, secondName: string, country: string, middleName?: Nullable<string>, birtDate?: Nullable<string>, birthPlace?: Nullable<string>, bandsIds?: Nullable<Nullable<string>[]>, instruments?: Nullable<Nullable<string>[]>): Nullable<Artist> | Promise<Nullable<Artist>>;
 }
 
 export class Band {
@@ -64,7 +68,7 @@ export class Band {
     origin?: Nullable<string>;
     members?: Nullable<Nullable<Member>[]>;
     website?: Nullable<string>;
-    genres?: Nullable<string>;
+    genres?: Nullable<Nullable<Genre>[]>;
 }
 
 export class Member {
@@ -73,13 +77,13 @@ export class Member {
     years?: Nullable<Nullable<string>[]>;
 }
 
-export class Favourite {
+export class Favourites {
     id: string;
     userId: string;
-    bands?: Nullable<Nullable<string>[]>;
-    genres?: Nullable<Nullable<string>[]>;
-    artists?: Nullable<Nullable<string>[]>;
-    tracks?: Nullable<Nullable<string>[]>;
+    bands?: Nullable<Nullable<Band>[]>;
+    genres?: Nullable<Nullable<Genre>[]>;
+    artists?: Nullable<Nullable<Artist>[]>;
+    tracks?: Nullable<Nullable<Track>[]>;
 }
 
 export class Genre {
@@ -93,7 +97,7 @@ export class Genre {
 export class Track {
     id: string;
     title?: Nullable<string>;
-    albums?: Nullable<string>;
+    albums?: Nullable<Nullable<Album>[]>;
     bands?: Nullable<Nullable<Band>[]>;
     duration?: Nullable<number>;
     released?: Nullable<number>;
@@ -105,7 +109,7 @@ export class User {
     firstName?: Nullable<string>;
     secondName?: Nullable<string>;
     middleName?: Nullable<string>;
-    password: string;
+    password?: Nullable<string>;
     email: string;
 }
 

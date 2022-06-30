@@ -39,6 +39,12 @@ import { UsersModule } from './users/users.module';
           FavouritesAPI: new FavouritesService(),
         };
       },
+      context: ({req}) => {
+        const token = req.headers.authorization || '';
+        return {token}
+      },
+      csrfPrevention: true,
+      cache: 'bounded',
     }),
     AlbumsModule,
     ArtistsModule,

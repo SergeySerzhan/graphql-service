@@ -24,10 +24,11 @@ export class TracksResolver {
     return track._id;
   }
 
+  @Resolver()
   @ResolveField()
   async albums(@Parent() track, @Context('dataSources') { AlbumsAPI }) {
     const { albumId } = track;
-    return (await AlbumsAPI.getAlbumById(albumId)).name;
+    return [await AlbumsAPI.getAlbumById(albumId)];
   }
 
   @Resolver()

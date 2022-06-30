@@ -28,13 +28,10 @@ export class BandsResolver {
     return band._id;
   }
 
+  @Resolver()
   @ResolveField()
   async genres(@Parent() band, @Context('dataSources') { GenresAPI }) {
     const { genresIds } = band;
-    return (
-      await Promise.all(genresIds.map((id) => GenresAPI.getGenreById(id)))
-    )
-      .map((genre) => genre.name)
-      .join(', ');
+    return await Promise.all(genresIds.map((id) => GenresAPI.getGenreById(id)));
   }
 }
