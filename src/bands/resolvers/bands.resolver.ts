@@ -7,7 +7,7 @@ import {
   Context,
 } from '@nestjs/graphql';
 
-@Resolver('Bands')
+@Resolver('Band')
 export class BandsResolver {
   @Query()
   async bands(

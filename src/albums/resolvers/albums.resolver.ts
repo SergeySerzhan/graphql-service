@@ -47,8 +47,8 @@ export class AlbumsResolver {
   @Resolver()
   @ResolveField()
   async tracks(@Parent() album, @Context('dataSources') { TracksAPI }) {
-    const { tracksIds } = album;
-    return await Promise.all(tracksIds.map((id) => TracksAPI.getTrackById(id)));
+    const { trackIds } = album;
+    return await Promise.all(trackIds.map((id) => TracksAPI.getTrackById(id)));
   }
 
   @Resolver()

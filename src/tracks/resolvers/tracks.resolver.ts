@@ -7,7 +7,7 @@ import {
   Context,
 } from '@nestjs/graphql';
 
-@Resolver('Tracks')
+@Resolver('Track')
 export class TracksResolver {
   @Query()
   async tracks(@Args('limit') limit: number, @Args('offset') offset: number, @Context('dataSources') { TracksAPI }) {

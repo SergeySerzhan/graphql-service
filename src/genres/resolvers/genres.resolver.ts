@@ -7,7 +7,7 @@ import {
   Parent,
 } from '@nestjs/graphql';
 
-@Resolver('Genres')
+@Resolver('Genre')
 export class GenresResolver {
   @Query()
   async genres(

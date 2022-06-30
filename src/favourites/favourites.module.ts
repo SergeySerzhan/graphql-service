@@ -1,7 +1,10 @@
 import { Module } from '@nestjs/common';
 
+import {FavouritesResolver} from "./resolvers/favourites.resolver";
+
 @Module({
-  imports: [],
-  providers: []
+  imports: [FavouritesResolver],
+  providers: [FavouritesResolver],
+  exports: [FavouritesResolver]
 })
-export class AlbumsModule {}
+export class FavouritesModule {}

@@ -11,6 +11,6 @@ export class UsersService extends RESTDataSource{
   }
 
   async getToken(email: string, password: string) {
-    return await this.post(this.baseURL, {email, password});
+    return (await this.post(`${this.baseURL}login`, {email, password})).jwt;
   }
 }

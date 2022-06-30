@@ -36,6 +36,6 @@ export class FavouritesResolver {
 
   @ResolveField()
   async tracks(@Parent() favourite) {
-    return favourite.tracksIds;
+    return favourite.trackIds;
   }
 }

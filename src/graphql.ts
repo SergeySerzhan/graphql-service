@@ -47,7 +47,7 @@ export abstract class IQuery {
 }
 
 export class Artist {
-    id?: Nullable<string>;
+    id: string;
     firstName?: Nullable<string>;
     secondName?: Nullable<string>;
     middleName?: Nullable<string>;
@@ -62,9 +62,15 @@ export class Band {
     id: string;
     name?: Nullable<string>;
     origin?: Nullable<string>;
-    members?: Nullable<Nullable<Artist>[]>;
+    members?: Nullable<Nullable<Member>[]>;
     website?: Nullable<string>;
     genres?: Nullable<string>;
+}
+
+export class Member {
+    artist?: Nullable<string>;
+    instrument?: Nullable<string>;
+    years?: Nullable<Nullable<string>[]>;
 }
 
 export class Favourite {

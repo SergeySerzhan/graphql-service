@@ -8,7 +8,7 @@ import {
 } from '@nestjs/graphql';
 
 @Resolver('Artist')
-export class AlbumsResolver {
+export class ArtistsResolver {
   @Query()
   async artists(
     @Args('limit') limit: number,
