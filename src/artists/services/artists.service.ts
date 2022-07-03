@@ -1,4 +1,7 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
+import { IArtist } from '../../interfaces/IArtist';
+import { DeleteInfo } from '../../graphql';
+import { CreateArtistInput } from '../dto/create-artist.dto';
 
 export class ArtistsService extends RESTDataSource {
   constructor() {
@@ -6,40 +9,22 @@ export class ArtistsService extends RESTDataSource {
     this.baseURL = process.env.ARTISTS_URL;
   }
 
-  async getAllArtists(limit: number, offset: number) {
+  async getAllArtists(limit: number, offset: number): Promise<IArtist[]> {
     return await this.get(this.baseURL, {
       limit: limit,
       offset: offset,
     });
   }
 
-  async getArtistById(id: string) {
+  async getArtistById(id: string): Promise<IArtist> {
     return await this.get(`${this.baseURL}${id}`);
   }
 
-  async createArtist(
-    token: string,
-    firstName: string,
-    secondName: string,
-    country: string,
-    middleName: string | null = null,
-    birthDate: string | null = null,
-    birthPlace: string | null = null,
-    bandsIds: string[],
-    instruments: string[],
-  ) {
+  async createArtist(token: string, input: CreateArtistInput) {
+    console.log(input);
     return await this.post(
       `${this.baseURL}`,
-      {
-        firstName,
-        secondName,
-        middleName,
-        birthDate,
-        birthPlace,
-        country,
-        bandsIds,
-        instruments,
-      },
+      { ...input },
       {
         headers: {
           Authorization: token,
@@ -48,7 +33,7 @@ export class ArtistsService extends RESTDataSource {
     );
   }
 
-  async deleteArtist(token: string, id: string) {
+  async deleteArtist(token: string, id: string): Promise<DeleteInfo> {
     return await this.delete(
       `${this.baseURL}${id}`,
       {},
@@ -60,15 +45,15 @@ export class ArtistsService extends RESTDataSource {
     );
   }
 
-  async updateArtist(
-    token: string,
-    firstName: string,
-    secondName: string,
-    country: string,
-    middleName: string | null = null,
-    birthDate: string | null = null,
-    birthPlace: string | null = null,
-    bandsIds: string[],
-    instruments: string[],
-  );
+  // async updateArtist(
+  //   token: string,
+  //   firstName: string,
+  //   secondName: string,
+  //   country: string,
+  //   middleName: string | null = null,
+  //   birthDate: string | null = null,
+  //   birthPlace: string | null = null,
+  //   bandsIds: string[],
+  //   instruments: string[],
+  // );
 }

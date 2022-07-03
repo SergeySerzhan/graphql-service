@@ -7,6 +7,17 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export class CreateArtistInput {
+    firstName: string;
+    secondName: string;
+    country: string;
+    middleName?: Nullable<string>;
+    birthDate?: Nullable<string>;
+    birthPlace?: Nullable<string>;
+    bandsIds?: Nullable<Nullable<string>[]>;
+    instruments?: Nullable<Nullable<string>[]>;
+}
+
 export class Album {
     id?: Nullable<string>;
     name?: Nullable<string>;
@@ -64,9 +75,11 @@ export class DeleteInfo {
 }
 
 export abstract class IMutation {
-    abstract createArtist(firstName: string, secondName: string, country: string, middleName?: Nullable<string>, birtDate?: Nullable<string>, birthPlace?: Nullable<string>, bandsIds?: Nullable<Nullable<string>[]>, instruments?: Nullable<Nullable<string>[]>): Nullable<Artist> | Promise<Nullable<Artist>>;
+    abstract createArtist(createArtistInput?: Nullable<CreateArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
 
     abstract deleteArtist(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
+
+    abstract updateArtist(firstName?: Nullable<string>, secondName?: Nullable<string>, country?: Nullable<string>, middleName?: Nullable<string>, birtDate?: Nullable<string>, birthPlace?: Nullable<string>, bandsIds?: Nullable<Nullable<string>[]>, instruments?: Nullable<Nullable<string>[]>): Nullable<Artist> | Promise<Nullable<Artist>>;
 }
 
 export class Band {

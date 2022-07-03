@@ -7,6 +7,8 @@ import {
   Context,
   Mutation,
 } from '@nestjs/graphql';
+import { Artist, Band, DeleteInfo } from '../../graphql';
+import { CreateArtistInput } from '../dto/create-artist.dto';
 
 @Resolver('Artist')
 export class ArtistsResolver {
@@ -15,39 +17,26 @@ export class ArtistsResolver {
     @Args('limit') limit: number,
     @Args('offset') offset: number,
     @Context('dataSources') { ArtistsAPI },
-  ) {
+  ): Promise<Artist[]> {
     return (await ArtistsAPI.getAllArtists(limit, offset)).items;
   }
 
   @Query()
-  async artist(@Args('id') id: string, @Context('dataSources') { ArtistsAPI }) {
+  async artist(
+    @Args('id') id: string,
+    @Context('dataSources') { ArtistsAPI },
+  ): Promise<Artist> {
     return await ArtistsAPI.getArtistById(id);
   }
 
   @Mutation()
   async createArtist(
-    @Args('firstName') firstName: string,
-    @Args('secondName') secondName: string,
-    @Args('country') country: string,
-    @Args('middleName') middleName: string,
-    @Args('birthDate') birthDate: string,
-    @Args('birthPlace') birthPlace: string,
-    @Args('bandsIds') bandsIds: string[],
-    @Args('instruments') instruments: string[],
+    @Args('createArtistInput') createArtistInput: CreateArtistInput,
     @Context('dataSources') { ArtistsAPI },
     @Context('token') token: string,
-  ) {
-    return await ArtistsAPI.createArtist(
-      token,
-      firstName,
-      secondName,
-      country,
-      middleName,
-      birthDate,
-      birthPlace,
-      bandsIds,
-      instruments,
-    );
+  ): Promise<Artist> {
+    console.log(createArtistInput);
+    return await ArtistsAPI.createArtist(token, createArtistInput);
   }
 
   @Mutation()
@@ -55,24 +44,27 @@ export class ArtistsResolver {
     @Args('id') id: string,
     @Context('dataSources') { ArtistsAPI },
     @Context('token') token: string,
-  ) {
+  ): Promise<DeleteInfo> {
     return await ArtistsAPI.deleteArtist(token, id);
   }
 
   @ResolveField()
-  async id(@Parent() artist) {
+  async id(@Parent() artist): Promise<string> {
     return artist._id;
   }
 
   @Resolver()
   @ResolveField()
-  async bands(@Parent() artist, @Context('dataSources') { BandsAPI }) {
+  async bands(
+    @Parent() artist,
+    @Context('dataSources') { BandsAPI },
+  ): Promise<Band[]> {
     const { bandsIds } = artist;
     return await Promise.all(bandsIds.map((id) => BandsAPI.getBandById(id)));
   }
 
   @ResolveField()
-  async instruments(@Parent() artist) {
+  async instruments(@Parent() artist): Promise<string> {
     return artist.instruments.join(', ');
   }
 }

@@ -1,19 +1,21 @@
-import { RESTDataSource } from "apollo-datasource-rest";
+import { RESTDataSource } from 'apollo-datasource-rest';
 
-export class AlbumsService extends RESTDataSource{
+import { IAlbum } from '../../interfaces/IAlbum';
+
+export class AlbumsService extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = process.env.ALBUMS_URL;
   }
 
-  async getAllAlbums(limit: number, offset: number) {
+  async getAllAlbums(limit: number, offset: number): Promise<IAlbum[]> {
     return await this.get(this.baseURL, {
-        limit: limit,
-        offset: offset
+      limit: limit,
+      offset: offset,
     });
   }
 
-  async getAlbumById(id: string) {
+  async getAlbumById(id: string): Promise<IAlbum> {
     return await this.get(`${this.baseURL}${id}`);
   }
 }

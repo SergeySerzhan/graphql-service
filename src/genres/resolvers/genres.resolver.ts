@@ -6,6 +6,7 @@ import {
   ResolveField,
   Parent,
 } from '@nestjs/graphql';
+import { Genre } from '../../graphql';
 
 @Resolver('Genre')
 export class GenresResolver {
@@ -14,17 +15,20 @@ export class GenresResolver {
     @Args('limit') limit: number,
     @Args('offset') offset: number,
     @Context('dataSources') { GenresAPI },
-  ) {
+  ): Promise<Genre[]> {
     return (await GenresAPI.getAllGenres(limit, offset)).items;
   }
 
   @Query()
-  async genre(@Args('id') id: string, @Context('dataSources') { GenresAPI }) {
+  async genre(
+    @Args('id') id: string,
+    @Context('dataSources') { GenresAPI },
+  ): Promise<Genre> {
     return await GenresAPI.getGenreById(id);
   }
 
   @ResolveField()
-  async id(@Parent() genre) {
+  async id(@Parent() genre): Promise<string> {
     return genre._id;
   }
 }
