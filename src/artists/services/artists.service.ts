@@ -1,7 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { IArtist } from '../../interfaces/IArtist';
-import { DeleteInfo } from '../../graphql';
-import { CreateArtistInput } from '../dto/create-artist.dto';
+import {CreateArtistInput, DeleteInfo, UpdateArtistInput} from '../../graphql';
 
 export class ArtistsService extends RESTDataSource {
   constructor() {
@@ -20,8 +19,10 @@ export class ArtistsService extends RESTDataSource {
     return await this.get(`${this.baseURL}${id}`);
   }
 
-  async createArtist(token: string, input: CreateArtistInput) {
-    console.log(input);
+  async createArtist(
+    token: string,
+    input: CreateArtistInput,
+  ): Promise<IArtist> {
     return await this.post(
       `${this.baseURL}`,
       { ...input },
@@ -45,15 +46,19 @@ export class ArtistsService extends RESTDataSource {
     );
   }
 
-  // async updateArtist(
-  //   token: string,
-  //   firstName: string,
-  //   secondName: string,
-  //   country: string,
-  //   middleName: string | null = null,
-  //   birthDate: string | null = null,
-  //   birthPlace: string | null = null,
-  //   bandsIds: string[],
-  //   instruments: string[],
-  // );
+  async updateArtist(
+    token: string,
+    id: string,
+    input: UpdateArtistInput,
+  ): Promise<IArtist> {
+    return await this.put(
+      `${this.baseURL}${id}`,
+      { ...input },
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+  }
 }

@@ -6,7 +6,27 @@ type Genre {
     year: Int
 }
 
+input CreateGenreInput {
+    name: String!
+    description: String
+    country: String
+    year: String
+}
+
+input UpdateGenreInput {
+    name: String
+    description: String
+    country: String
+    year: String
+}
+
 extend type Query {
     genres(limit: Int, offset: Int): [Genre]
     genre(id: ID!): Genre
+}
+
+extend type Mutation  {
+    createGenre(createGenreInput: CreateGenreInput): Genre
+    deleteGenre(id: ID!): DeleteInfo
+    updateGenre(id: ID!, updateGenreInput: UpdateGenreInput): Genre
 }

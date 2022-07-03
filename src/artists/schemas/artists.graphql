@@ -31,17 +31,19 @@ input CreateArtistInput {
   instruments: [String]
 }
 
+input UpdateArtistInput {
+  firstName: String
+  secondName: String
+  country: String
+  middleName: String
+  birthDate: String
+  birthPlace: String
+  bandsIds: [String]
+  instruments: [String]
+}
+
 type Mutation {
   createArtist(createArtistInput: CreateArtistInput): Artist
   deleteArtist(id: ID!): DeleteInfo
-  updateArtist(
-    firstName: String
-    secondName: String
-    country: String
-    middleName: String
-    birtDate: String
-    birthPlace: String
-    bandsIds: [String]
-    instruments: [String]
-  ): Artist
+  updateArtist(id: ID!, updateArtistInput: UpdateArtistInput): Artist
 }

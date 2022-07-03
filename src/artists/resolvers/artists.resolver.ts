@@ -7,8 +7,7 @@ import {
   Context,
   Mutation,
 } from '@nestjs/graphql';
-import { Artist, Band, DeleteInfo } from '../../graphql';
-import { CreateArtistInput } from '../dto/create-artist.dto';
+import {Artist, Band, CreateArtistInput, DeleteInfo, UpdateArtistInput} from '../../graphql';
 
 @Resolver('Artist')
 export class ArtistsResolver {
@@ -35,7 +34,6 @@ export class ArtistsResolver {
     @Context('dataSources') { ArtistsAPI },
     @Context('token') token: string,
   ): Promise<Artist> {
-    console.log(createArtistInput);
     return await ArtistsAPI.createArtist(token, createArtistInput);
   }
 
@@ -46,6 +44,16 @@ export class ArtistsResolver {
     @Context('token') token: string,
   ): Promise<DeleteInfo> {
     return await ArtistsAPI.deleteArtist(token, id);
+  }
+
+  @Mutation()
+  async updateArtist(
+      @Args('id') id: string,
+      @Args('updateArtistInput') updateArtistInput: UpdateArtistInput,
+      @Context('dataSources') { ArtistsAPI },
+      @Context('token') token: string,
+  ): Promise<Artist> {
+    return await ArtistsAPI.updateArtist(token, id, updateArtistInput);
   }
 
   @ResolveField()
