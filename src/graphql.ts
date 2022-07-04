@@ -7,6 +7,24 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export class CreateAlbumInput {
+    name: string;
+    released?: Nullable<string>;
+    artistsIds?: Nullable<Nullable<string>[]>;
+    bandsIds?: Nullable<Nullable<string>[]>;
+    trackIds?: Nullable<Nullable<string>[]>;
+    genresIds?: Nullable<Nullable<string>[]>;
+}
+
+export class UpdateAlbumInput {
+    name?: Nullable<string>;
+    released?: Nullable<string>;
+    artistsIds?: Nullable<Nullable<string>[]>;
+    bandsIds?: Nullable<Nullable<string>[]>;
+    trackIds?: Nullable<Nullable<string>[]>;
+    genresIds?: Nullable<Nullable<string>[]>;
+}
+
 export class CreateArtistInput {
     firstName: string;
     secondName: string;
@@ -96,6 +114,38 @@ export class Album {
     image?: Nullable<string>;
 }
 
+export abstract class IMutation {
+    abstract createAlbum(createAlbumInput?: Nullable<CreateAlbumInput>): Nullable<Album> | Promise<Nullable<Album>>;
+
+    abstract deleteAlbum(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
+
+    abstract updateAlbum(id: string, updateAlbumInput?: Nullable<UpdateAlbumInput>): Nullable<Album> | Promise<Nullable<Album>>;
+
+    abstract createArtist(createArtistInput?: Nullable<CreateArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
+
+    abstract deleteArtist(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
+
+    abstract updateArtist(id: string, updateArtistInput?: Nullable<UpdateArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
+
+    abstract createBand(createBandInput?: Nullable<CreateBandInput>): Nullable<Band> | Promise<Nullable<Band>>;
+
+    abstract deleteBand(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
+
+    abstract updateBand(id: string, updateBandInput?: Nullable<UpdateBandInput>): Nullable<Band> | Promise<Nullable<Band>>;
+
+    abstract createGenre(createGenreInput?: Nullable<CreateGenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
+
+    abstract deleteGenre(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
+
+    abstract updateGenre(id: string, updateGenreInput?: Nullable<UpdateGenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
+
+    abstract createTrack(createTrackInput?: Nullable<CreateTrackInput>): Nullable<Track> | Promise<Nullable<Track>>;
+
+    abstract deleteTrack(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
+
+    abstract updateTrack(id: string, updateTrackInput?: Nullable<UpdateTrackInput>): Nullable<Track> | Promise<Nullable<Track>>;
+}
+
 export abstract class IQuery {
     abstract albums(limit?: Nullable<number>, offset?: Nullable<number>): Nullable<Nullable<Album>[]> | Promise<Nullable<Nullable<Album>[]>>;
 
@@ -139,32 +189,6 @@ export class Artist {
 export class DeleteInfo {
     acknowledged?: Nullable<boolean>;
     deletedCount?: Nullable<number>;
-}
-
-export abstract class IMutation {
-    abstract createArtist(createArtistInput?: Nullable<CreateArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
-
-    abstract deleteArtist(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
-
-    abstract updateArtist(id: string, updateArtistInput?: Nullable<UpdateArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
-
-    abstract createBand(createBandInput?: Nullable<CreateBandInput>): Nullable<Band> | Promise<Nullable<Band>>;
-
-    abstract deleteBand(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
-
-    abstract updateBand(id: string, updateBandInput?: Nullable<UpdateBandInput>): Nullable<Band> | Promise<Nullable<Band>>;
-
-    abstract createGenre(createGenreInput?: Nullable<CreateGenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
-
-    abstract deleteGenre(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
-
-    abstract updateGenre(id: string, updateGenreInput?: Nullable<UpdateGenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
-
-    abstract createTrack(createTrackInput?: Nullable<CreateTrackInput>): Nullable<Track> | Promise<Nullable<Track>>;
-
-    abstract deleteTrack(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
-
-    abstract updateTrack(id: string, updateTrackInput?: Nullable<UpdateTrackInput>): Nullable<Track> | Promise<Nullable<Track>>;
 }
 
 export class Band {

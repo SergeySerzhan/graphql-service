@@ -9,6 +9,30 @@ type Album {
     image: String
 }
 
+input CreateAlbumInput {
+    name: String!
+    released: String
+    artistsIds: [ID]
+    bandsIds: [ID]
+    trackIds: [ID]
+    genresIds: [ID]
+}
+
+input UpdateAlbumInput {
+    name: String
+    released: String
+    artistsIds: [ID]
+    bandsIds: [ID]
+    trackIds: [ID]
+    genresIds: [ID]
+}
+
+extend type Mutation {
+    createAlbum(createAlbumInput: CreateAlbumInput): Album
+    deleteAlbum(id: ID!): DeleteInfo
+    updateAlbum(id: ID!, updateAlbumInput: UpdateAlbumInput): Album
+}
+
 extend type Query {
     albums(limit: Int, offset: Int): [Album]
     album(id: ID!): Album

@@ -5,9 +5,19 @@ import {
   ResolveField,
   Parent,
   Context,
+  Mutation,
 } from '@nestjs/graphql';
 
-import { Album, Artist, Band, Genre, Track } from '../../graphql';
+import {
+  Album,
+  Artist,
+  Band,
+  CreateAlbumInput,
+  DeleteInfo,
+  Genre,
+  Track,
+  UpdateAlbumInput,
+} from '../../graphql';
 
 @Resolver('Album')
 export class AlbumsResolver {
@@ -26,6 +36,34 @@ export class AlbumsResolver {
     @Context('dataSources') { AlbumsAPI },
   ): Promise<Album> {
     return await AlbumsAPI.getAlbumById(id);
+  }
+
+  @Mutation()
+  async createAlbum(
+    @Args('createAlbumInput') createAlbumInput: CreateAlbumInput,
+    @Context('dataSources') { AlbumsAPI },
+    @Context('token') token: string,
+  ): Promise<Album> {
+    return await AlbumsAPI.createAlbum(token, createAlbumInput);
+  }
+
+  @Mutation()
+  async deleteAlbum(
+    @Args('id') id: string,
+    @Context('dataSources') { AlbumsAPI },
+    @Context('token') token: string,
+  ): Promise<DeleteInfo> {
+    return await AlbumsAPI.deleteAlbum(token, id);
+  }
+
+  @Mutation()
+  async updateAlbum(
+    @Args('id') id: string,
+    @Args('updateAlbumInput') updateAlbumInput: UpdateAlbumInput,
+    @Context('dataSources') { AlbumsAPI },
+    @Context('token') token: string,
+  ): Promise<Album> {
+    return await AlbumsAPI.updateAlbum(token, id, updateAlbumInput);
   }
 
   @ResolveField()
