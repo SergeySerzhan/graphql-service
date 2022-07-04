@@ -6,6 +6,6 @@ export interface IArtist {
   birthDate: string;
   birthPlace: string;
   country: string;
-  bandsIds: string[]
+  bandsIds: string[];
   instruments: string[];
 }

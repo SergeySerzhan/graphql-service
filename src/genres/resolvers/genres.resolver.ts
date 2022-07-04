@@ -7,7 +7,12 @@ import {
   Parent,
   Mutation,
 } from '@nestjs/graphql';
-import {CreateGenreInput, DeleteInfo, Genre, UpdateGenreInput} from '../../graphql';
+import {
+  CreateGenreInput,
+  DeleteInfo,
+  Genre,
+  UpdateGenreInput,
+} from '../../graphql';
 
 @Resolver('Genre')
 export class GenresResolver {
@@ -39,19 +44,19 @@ export class GenresResolver {
 
   @Mutation()
   async deleteGenre(
-      @Args('id') id: string,
-      @Context('dataSources') { GenresAPI },
-      @Context('token') token: string
+    @Args('id') id: string,
+    @Context('dataSources') { GenresAPI },
+    @Context('token') token: string,
   ): Promise<DeleteInfo> {
     return await GenresAPI.deleteGenre(token, id);
   }
 
   @Mutation()
   async updateGenre(
-      @Args('id') id: string,
-      @Args('updateGenreInput') updateGenreInput: UpdateGenreInput,
-      @Context('dataSources') { GenresAPI },
-      @Context('token') token: string
+    @Args('id') id: string,
+    @Args('updateGenreInput') updateGenreInput: UpdateGenreInput,
+    @Context('dataSources') { GenresAPI },
+    @Context('token') token: string,
   ): Promise<Genre> {
     return await GenresAPI.updateGenre(token, id, updateGenreInput);
   }

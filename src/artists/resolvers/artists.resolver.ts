@@ -7,7 +7,13 @@ import {
   Context,
   Mutation,
 } from '@nestjs/graphql';
-import {Artist, Band, CreateArtistInput, DeleteInfo, UpdateArtistInput} from '../../graphql';
+import {
+  Artist,
+  Band,
+  CreateArtistInput,
+  DeleteInfo,
+  UpdateArtistInput,
+} from '../../graphql';
 
 @Resolver('Artist')
 export class ArtistsResolver {
@@ -48,10 +54,10 @@ export class ArtistsResolver {
 
   @Mutation()
   async updateArtist(
-      @Args('id') id: string,
-      @Args('updateArtistInput') updateArtistInput: UpdateArtistInput,
-      @Context('dataSources') { ArtistsAPI },
-      @Context('token') token: string,
+    @Args('id') id: string,
+    @Args('updateArtistInput') updateArtistInput: UpdateArtistInput,
+    @Context('dataSources') { ArtistsAPI },
+    @Context('token') token: string,
   ): Promise<Artist> {
     return await ArtistsAPI.updateArtist(token, id, updateArtistInput);
   }

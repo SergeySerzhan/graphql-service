@@ -1,21 +1,94 @@
 import {
-  Resolver,
   Args,
+  Context,
+  Mutation,
+  Parent,
   Query,
   ResolveField,
-  Parent,
-  Context,
+  Resolver,
 } from '@nestjs/graphql';
-import { Artist, Band, Favourites, Genre, Track } from '../../graphql';
+
+import {
+  Artist,
+  Band,
+  Favourites,
+  FavouriteType,
+  Genre,
+  Track,
+} from '../../graphql';
+import { ICustomRequest } from '../../interfaces/ICustomRequest';
 
 @Resolver('Favourites')
 export class FavouritesResolver {
   @Query()
   async favourites(
-    @Args('userId') userId: string,
+    @Context('token') token: string,
     @Context('dataSources') { FavouritesAPI },
+    @Context('dataSources') { UsersAPI },
+    @Context('req') req: ICustomRequest,
   ): Promise<Favourites> {
-    return await FavouritesAPI.getFavourites(userId);
+    req.user = await UsersAPI.verify(token);
+    return await FavouritesAPI.getFavourites(token);
+  }
+
+  @Mutation()
+  async addTrackToFavourites(
+    @Args('id') id: string,
+    @Context('dataSources') { FavouritesAPI },
+    @Context('dataSources') { UsersAPI },
+    @Context('token') token: string,
+    @Context('req') req: ICustomRequest,
+  ): Promise<Favourites> {
+    req.user = await UsersAPI.verify(token);
+    return await FavouritesAPI.addToFavourites(token, {
+      type: FavouriteType.tracks,
+      id,
+    });
+  }
+
+  @Mutation()
+  async addBandToFavourites(
+    @Args('id') id: string,
+    @Context('dataSources') { FavouritesAPI },
+    @Context('dataSources') { UsersAPI },
+    @Context('token') token: string,
+    @Context('req') req: ICustomRequest,
+  ): Promise<Favourites> {
+    req.user = await UsersAPI.verify(token);
+    return await FavouritesAPI.addToFavourites(token, {
+      type: FavouriteType.bands,
+      id,
+    });
+  }
+
+  @Mutation()
+  async addArtistToFavourites(
+    @Args('id') id: string,
+    @Context('dataSources') { FavouritesAPI },
+    @Context('dataSources') { UsersAPI },
+    @Context('token') token: string,
+    @Context('req') req: ICustomRequest,
+  ): Promise<Favourites> {
+    req.user = await UsersAPI.verify(token);
+    return await FavouritesAPI.addToFavourites(token, {
+      type: FavouriteType.artists,
+      id,
+    });
+  }
+
+  @Mutation()
+  async addGenreToFavourites(
+    @Args('id') id: string,
+    @Context('dataSources') { FavouritesAPI },
+    @Context('dataSources') { UsersAPI },
+    @Context('token') token: string,
+    @Context('req') req: ICustomRequest,
+  ): Promise<Favourites> {
+    req.user = await UsersAPI.verify(token);
+    return await FavouritesAPI.addToFavourites(token, {
+      type: FavouriteType.genres,
+      id,
+    });
   }
 
   @ResolveField()

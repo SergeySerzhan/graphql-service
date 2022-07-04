@@ -1,6 +1,10 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { IArtist } from '../../interfaces/IArtist';
-import {CreateArtistInput, DeleteInfo, UpdateArtistInput} from '../../graphql';
+import {
+  CreateArtistInput,
+  DeleteInfo,
+  UpdateArtistInput,
+} from '../../graphql';
 
 export class ArtistsService extends RESTDataSource {
   constructor() {

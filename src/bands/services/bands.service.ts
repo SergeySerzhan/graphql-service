@@ -1,6 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { IBand } from '../../interfaces/IBand';
-import { CreateBandInput, DeleteInfo, UpdateBandInput } from "../../graphql";
+import { CreateBandInput, DeleteInfo, UpdateBandInput } from '../../graphql';
 
 export class BandsService extends RESTDataSource {
   constructor() {
@@ -43,7 +43,11 @@ export class BandsService extends RESTDataSource {
     );
   }
 
-  async updateBand(token: string, id: string, input: UpdateBandInput): Promise<IBand> {
+  async updateBand(
+    token: string,
+    id: string,
+    input: UpdateBandInput,
+  ): Promise<IBand> {
     return await this.put(
       `${this.baseURL}${id}`,
       { ...input },

@@ -7,7 +7,13 @@ import {
   Context,
   Mutation,
 } from '@nestjs/graphql';
-import { Band, CreateBandInput, DeleteInfo, Genre, UpdateBandInput } from "../../graphql";
+import {
+  Band,
+  CreateBandInput,
+  DeleteInfo,
+  Genre,
+  UpdateBandInput,
+} from '../../graphql';
 
 @Resolver('Band')
 export class BandsResolver {

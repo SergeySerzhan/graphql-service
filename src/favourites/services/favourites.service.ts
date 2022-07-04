@@ -1,5 +1,7 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
+
 import { IFavorite } from '../../interfaces/IFavourite';
+import { FavouriteType } from "../../graphql";
 
 export class FavouritesService extends RESTDataSource {
   constructor() {
@@ -7,7 +9,30 @@ export class FavouritesService extends RESTDataSource {
     this.baseURL = process.env.FAVOURITES_URL;
   }
 
-  async getFavourites(userId: string): Promise<IFavorite> {
-    return await this.get(`${this.baseURL}${userId}`);
+  async getFavourites(token: string): Promise<IFavorite> {
+    return await this.get(
+      this.baseURL,
+      {},
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+  }
+
+  async addToFavourites(
+    token: string,
+    input: { type: FavouriteType; id: string },
+  ): Promise<IFavorite> {
+    return await this.put(
+      `${this.baseURL}add`,
+      { ...input },
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
   }
 }

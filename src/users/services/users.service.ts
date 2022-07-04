@@ -17,6 +17,18 @@ export class UsersService extends RESTDataSource {
   }
 
   async register(input: UserInput): Promise<IUser> {
-    return await this.post(this.baseURL, { ...input });
+    return await this.post(`${this.baseURL}register`, { ...input });
+  }
+
+  async verify(token: string): Promise<IUser> {
+    return await this.post(
+      `${this.baseURL}verify`,
+      {},
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
   }
 }

@@ -7,6 +7,20 @@ type Favourites {
     tracks: [Track]
 }
 
+enum FavouriteType {
+    bands
+    genres
+    artists
+    tracks
+}
+
+extend type Mutation {
+    addTrackToFavourites(id: ID!): Favourites
+    addBandToFavourites(id: ID!): Favourites
+    addArtistToFavourites(id: ID!): Favourites
+    addGenreToFavourites(id: ID!): Favourites
+}
+
 extend type Query {
     favourites(userId: ID!): Favourites
 }

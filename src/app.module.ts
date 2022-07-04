@@ -39,9 +39,9 @@ import { UsersModule } from './users/users.module';
           FavouritesAPI: new FavouritesService(),
         };
       },
-      context: ({req}) => {
+      context: ({ req }) => {
         const token = req.headers.authorization || '';
-        return {token}
+        return { token, req };
       },
       csrfPrevention: true,
       cache: 'bounded',

@@ -1,4 +1,3 @@
-
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -7,6 +6,13 @@
 
 /* tslint:disable */
 /* eslint-disable */
+export enum FavouriteType {
+    bands = "bands",
+    genres = "genres",
+    artists = "artists",
+    tracks = "tracks"
+}
+
 export class CreateAlbumInput {
     name: string;
     released?: Nullable<string>;
@@ -139,6 +145,8 @@ export abstract class IMutation {
     abstract deleteBand(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
 
     abstract updateBand(id: string, updateBandInput?: Nullable<UpdateBandInput>): Nullable<Band> | Promise<Nullable<Band>>;
+
+    abstract addTrackToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
 
     abstract createGenre(createGenreInput?: Nullable<CreateGenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
 
