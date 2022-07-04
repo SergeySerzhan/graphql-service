@@ -5,8 +5,9 @@ import {
   ResolveField,
   Parent,
   Context,
+  Mutation,
 } from '@nestjs/graphql';
-import { Band, Genre } from '../../graphql';
+import { Band, CreateBandInput, DeleteInfo, Genre, UpdateBandInput } from "../../graphql";
 
 @Resolver('Band')
 export class BandsResolver {
@@ -25,6 +26,34 @@ export class BandsResolver {
     @Context('dataSources') { BandsAPI },
   ): Promise<Band> {
     return await BandsAPI.getBandById(id);
+  }
+
+  @Mutation()
+  async createBand(
+    @Args('createBandInput') createBandInput: CreateBandInput,
+    @Context('dataSources') { BandsAPI },
+    @Context('token') token: string,
+  ): Promise<Band> {
+    return await BandsAPI.createBand(token, createBandInput);
+  }
+
+  @Mutation()
+  async deleteBand(
+    @Args('id') id: string,
+    @Context('dataSources') { BandsAPI },
+    @Context('token') token: string,
+  ): Promise<DeleteInfo> {
+    return await BandsAPI.deleteBand(token, id);
+  }
+
+  @Mutation()
+  async updateBand(
+    @Args('id') id: string,
+    @Args('updateBandInput') updateBandInput: UpdateBandInput,
+    @Context('dataSources') { BandsAPI },
+    @Context('token') token: string,
+  ): Promise<Band> {
+    return await BandsAPI.updateBand(token, id, updateBandInput);
   }
 
   @ResolveField()

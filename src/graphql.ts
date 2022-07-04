@@ -29,6 +29,28 @@ export class UpdateArtistInput {
     instruments?: Nullable<Nullable<string>[]>;
 }
 
+export class MemberInput {
+    artist?: Nullable<string>;
+    instrument?: Nullable<string>;
+    years?: Nullable<Nullable<string>[]>;
+}
+
+export class CreateBandInput {
+    name: string;
+    origin?: Nullable<string>;
+    members?: Nullable<Nullable<MemberInput>[]>;
+    website?: Nullable<string>;
+    genresIds?: Nullable<Nullable<string>[]>;
+}
+
+export class UpdateBandInput {
+    name?: Nullable<string>;
+    origin?: Nullable<string>;
+    members?: Nullable<Nullable<MemberInput>[]>;
+    website?: Nullable<string>;
+    genresIds?: Nullable<Nullable<string>[]>;
+}
+
 export class CreateGenreInput {
     name: string;
     description?: Nullable<string>;
@@ -105,6 +127,12 @@ export abstract class IMutation {
     abstract deleteArtist(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
 
     abstract updateArtist(id: string, updateArtistInput?: Nullable<UpdateArtistInput>): Nullable<Artist> | Promise<Nullable<Artist>>;
+
+    abstract createBand(createBandInput?: Nullable<CreateBandInput>): Nullable<Band> | Promise<Nullable<Band>>;
+
+    abstract deleteBand(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
+
+    abstract updateBand(id: string, updateBandInput?: Nullable<UpdateBandInput>): Nullable<Band> | Promise<Nullable<Band>>;
 
     abstract createGenre(createGenreInput?: Nullable<CreateGenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
 
