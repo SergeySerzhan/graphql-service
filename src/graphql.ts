@@ -65,6 +65,26 @@ export class UpdateGenreInput {
     year?: Nullable<string>;
 }
 
+export class CreateTrackInput {
+    title: string;
+    albumId?: Nullable<string>;
+    bandsIds?: Nullable<Nullable<string>[]>;
+    artistsIds?: Nullable<Nullable<string>[]>;
+    duration?: Nullable<number>;
+    released?: Nullable<number>;
+    genresIds?: Nullable<Nullable<string>[]>;
+}
+
+export class UpdateTrackInput {
+    title?: Nullable<string>;
+    albumId?: Nullable<string>;
+    bandsIds?: Nullable<Nullable<string>[]>;
+    artistsIds?: Nullable<Nullable<string>[]>;
+    duration?: Nullable<number>;
+    released?: Nullable<number>;
+    genresIds?: Nullable<Nullable<string>[]>;
+}
+
 export class Album {
     id?: Nullable<string>;
     name?: Nullable<string>;
@@ -139,6 +159,12 @@ export abstract class IMutation {
     abstract deleteGenre(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
 
     abstract updateGenre(id: string, updateGenreInput?: Nullable<UpdateGenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
+
+    abstract createTrack(createTrackInput?: Nullable<CreateTrackInput>): Nullable<Track> | Promise<Nullable<Track>>;
+
+    abstract deleteTrack(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
+
+    abstract updateTrack(id: string, updateTrackInput?: Nullable<UpdateTrackInput>): Nullable<Track> | Promise<Nullable<Track>>;
 }
 
 export class Band {

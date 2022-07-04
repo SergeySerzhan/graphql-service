@@ -5,8 +5,17 @@ import {
   ResolveField,
   Parent,
   Context,
+  Mutation,
 } from '@nestjs/graphql';
-import { Album, Band, Genre, Track } from '../../graphql';
+import {
+  Album,
+  Band,
+  CreateTrackInput,
+  DeleteInfo,
+  Genre,
+  Track,
+  UpdateTrackInput,
+} from '../../graphql';
 
 @Resolver('Track')
 export class TracksResolver {
@@ -25,6 +34,34 @@ export class TracksResolver {
     @Context('dataSources') { TracksAPI },
   ): Promise<Track> {
     return await TracksAPI.getTrackById(id);
+  }
+
+  @Mutation()
+  async createTrack(
+    @Args('createTrackInput') createTrackInput: CreateTrackInput,
+    @Context('dataSources') { TracksAPI },
+    @Context('token') token: string,
+  ): Promise<Track> {
+    return await TracksAPI.createTrack(token, createTrackInput);
+  }
+
+  @Mutation()
+  async deleteTrack(
+    @Args('id') id: string,
+    @Context('dataSources') { TracksAPI },
+    @Context('token') token: string,
+  ): Promise<DeleteInfo> {
+    return await TracksAPI.deleteTrack(token, id);
+  }
+
+  @Mutation()
+  async updateTrack(
+    @Args('id') id: string,
+    @Args('updateTrackInput') updateTrackInput: UpdateTrackInput,
+    @Context('dataSources') { TracksAPI },
+    @Context('token') token: string,
+  ): Promise<Track> {
+    return await TracksAPI.updateTrack(token, id, updateTrackInput);
   }
 
   @ResolveField()

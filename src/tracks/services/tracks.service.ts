@@ -1,5 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { ITrack } from '../../interfaces/ITrack';
+import { CreateTrackInput, DeleteInfo, UpdateTrackInput } from '../../graphql';
 
 export class TracksService extends RESTDataSource {
   constructor() {
@@ -16,5 +17,45 @@ export class TracksService extends RESTDataSource {
 
   async getTrackById(id: string): Promise<ITrack> {
     return await this.get(`${this.baseURL}${id}`);
+  }
+
+  async createTrack(token: string, input: CreateTrackInput): Promise<ITrack> {
+    return await this.post(
+      this.baseURL,
+      { ...input },
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+  }
+
+  async deleteTrack(token: string, id: string): Promise<DeleteInfo> {
+    return await this.delete(
+      `${this.baseURL}${id}`,
+      {},
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+  }
+
+  async updateTrack(
+    token: string,
+    id: string,
+    input: UpdateTrackInput,
+  ): Promise<ITrack> {
+    return await this.put(
+      `${this.baseURL}${id}`,
+      { ...input },
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
   }
 }
