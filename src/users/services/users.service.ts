@@ -1,5 +1,6 @@
 import { RESTDataSource } from 'apollo-datasource-rest';
 import { IUser } from '../../interfaces/IUser';
+import { UserInput } from '../../graphql';
 
 export class UsersService extends RESTDataSource {
   constructor() {
@@ -13,5 +14,9 @@ export class UsersService extends RESTDataSource {
 
   async getToken(email: string, password: string): Promise<{ jwt: string }> {
     return (await this.post(`${this.baseURL}login`, { email, password })).jwt;
+  }
+
+  async register(input: UserInput): Promise<IUser> {
+    return await this.post(this.baseURL, { ...input });
   }
 }

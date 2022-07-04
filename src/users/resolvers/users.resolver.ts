@@ -5,8 +5,9 @@ import {
   ResolveField,
   Parent,
   Context,
+  Mutation,
 } from '@nestjs/graphql';
-import { User } from '../../graphql';
+import { User, UserInput } from '../../graphql';
 
 @Resolver('User')
 export class UsersResolver {
@@ -25,6 +26,14 @@ export class UsersResolver {
     @Context('dataSources') { UsersAPI },
   ): Promise<{ jwt: string }> {
     return await UsersAPI.getToken(email, password);
+  }
+
+  @Mutation()
+  async register(
+    @Args('userInput') userInput: UserInput,
+    @Context('dataSources') { UsersAPI },
+  ): Promise<User> {
+    return await UsersAPI.register(userInput);
   }
 
   @ResolveField()

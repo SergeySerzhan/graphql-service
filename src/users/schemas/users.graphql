@@ -7,6 +7,17 @@ type User {
     email: String!
 }
 
+input UserInput {
+    firstName: String!
+    lastName: String!
+    password: String!
+    email: String
+}
+
+extend type Mutation {
+    register(userInput: UserInput): User
+}
+
 extend type Query {
     user(id: ID!): User
     jwt(email: String!, password: String!): String

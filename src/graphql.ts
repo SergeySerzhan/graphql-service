@@ -103,6 +103,13 @@ export class UpdateTrackInput {
     genresIds?: Nullable<Nullable<string>[]>;
 }
 
+export class UserInput {
+    firstName: string;
+    lastName: string;
+    password: string;
+    email?: Nullable<string>;
+}
+
 export class Album {
     id?: Nullable<string>;
     name?: Nullable<string>;
@@ -144,6 +151,8 @@ export abstract class IMutation {
     abstract deleteTrack(id: string): Nullable<DeleteInfo> | Promise<Nullable<DeleteInfo>>;
 
     abstract updateTrack(id: string, updateTrackInput?: Nullable<UpdateTrackInput>): Nullable<Track> | Promise<Nullable<Track>>;
+
+    abstract register(userInput?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export abstract class IQuery {
