@@ -8,7 +8,7 @@ import {
   Mutation,
 } from '@nestjs/graphql';
 import {
-  Album,
+  Album, Artist,
   Band,
   CreateTrackInput,
   DeleteInfo,
@@ -71,12 +71,23 @@ export class TracksResolver {
 
   @Resolver()
   @ResolveField()
-  async albums(
+  async album(
     @Parent() track,
     @Context('dataSources') { AlbumsAPI },
-  ): Promise<Album[]> {
+  ): Promise<Album> {
     const { albumId } = track;
-    return [await AlbumsAPI.getAlbumById(albumId)];
+    if (!albumId) return null;
+    return await AlbumsAPI.getAlbumById(albumId);
+  }
+
+  @Resolver()
+  @ResolveField()
+  async artists(
+      @Parent() track,
+      @Context('dataSources') {ArtistsAPI}
+  ): Promise<Artist[]> {
+    const { artistsIds } = track;
+    return await Promise.all(artistsIds.map(id => ArtistsAPI.getArtistById(id)));
   }
 
   @Resolver()
@@ -86,6 +97,7 @@ export class TracksResolver {
     @Context('dataSources') { BandsAPI },
   ): Promise<Band[]> {
     const { bandsIds } = track;
+    console.log(bandsIds);
     return await Promise.all(bandsIds.map((id) => BandsAPI.getBandById(id)));
   }
 

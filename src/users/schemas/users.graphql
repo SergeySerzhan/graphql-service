@@ -11,7 +11,7 @@ input UserInput {
     firstName: String!
     lastName: String!
     password: String!
-    email: String
+    email: String!
 }
 
 extend type Mutation {

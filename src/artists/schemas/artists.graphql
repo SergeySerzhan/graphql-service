@@ -27,7 +27,7 @@ input CreateArtistInput {
   middleName: String
   birthDate: String
   birthPlace: String
-  bandsIds: [String]
+  bandsIds: [ID]
   instruments: [String]
 }
 
@@ -38,7 +38,7 @@ input UpdateArtistInput {
   middleName: String
   birthDate: String
   birthPlace: String
-  bandsIds: [String]
+  bandsIds: [ID]
   instruments: [String]
 }
 

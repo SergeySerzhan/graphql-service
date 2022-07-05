@@ -10,7 +10,7 @@ input CreateGenreInput {
     name: String!
     description: String
     country: String
-    year: String
+    year: Int
 }
 
 input UpdateGenreInput {

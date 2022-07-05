@@ -80,7 +80,7 @@ export class CreateGenreInput {
     name: string;
     description?: Nullable<string>;
     country?: Nullable<string>;
-    year?: Nullable<string>;
+    year?: Nullable<number>;
 }
 
 export class UpdateGenreInput {
@@ -250,7 +250,8 @@ export class Genre {
 export class Track {
     id: string;
     title?: Nullable<string>;
-    albums?: Nullable<Nullable<Album>[]>;
+    album?: Nullable<Album>;
+    artists?: Nullable<Nullable<Artist>[]>;
     bands?: Nullable<Nullable<Band>[]>;
     duration?: Nullable<number>;
     released?: Nullable<number>;
