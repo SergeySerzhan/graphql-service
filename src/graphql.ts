@@ -1,3 +1,4 @@
+
 /*
  * -------------------------------------------------------
  * THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
@@ -147,6 +148,12 @@ export abstract class IMutation {
     abstract updateBand(id: string, updateBandInput?: Nullable<UpdateBandInput>): Nullable<Band> | Promise<Nullable<Band>>;
 
     abstract addTrackToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
+
+    abstract addBandToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
+
+    abstract addArtistToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
+
+    abstract addGenreToFavourites(id: string): Nullable<Favourites> | Promise<Nullable<Favourites>>;
 
     abstract createGenre(createGenreInput?: Nullable<CreateGenreInput>): Nullable<Genre> | Promise<Nullable<Genre>>;
 
