@@ -8,13 +8,16 @@ type Band {
 }
 
 type Member {
-    artist: String
+    artist: ID
+    firstName: String
+    secondName: String
+    middleName: String
     instrument: String
     years: [String]
 }
 
 input MemberInput {
-    artist: String
+    artist: ID
     instrument: String
     years: [String]
 }

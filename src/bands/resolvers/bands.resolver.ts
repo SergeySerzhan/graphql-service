@@ -12,8 +12,11 @@ import {
   CreateBandInput,
   DeleteInfo,
   Genre,
+  Member,
+  MemberInput,
   UpdateBandInput,
 } from '../../graphql';
+import { IArtist } from "../../interfaces/IArtist";
 
 @Resolver('Band')
 export class BandsResolver {
@@ -75,5 +78,25 @@ export class BandsResolver {
   ): Promise<Genre[]> {
     const { genresIds } = band;
     return await Promise.all(genresIds.map((id) => GenresAPI.getGenreById(id)));
+  }
+
+  @ResolveField()
+  async members(
+    @Parent() band,
+    @Context('dataSources') { ArtistsAPI },
+  ): Promise<Member[]> {
+    const { members } = band;
+    return (
+      await Promise.all(
+        members.map((member: MemberInput) => ArtistsAPI.getArtistById(member.artist)),
+      )
+    ).map((artist: IArtist, i) => {
+      return {
+        id: members[i].artist,
+        ...artist,
+        instrument: members[i].instrument,
+        years: members[i].years
+      }
+    });
   }
 }
